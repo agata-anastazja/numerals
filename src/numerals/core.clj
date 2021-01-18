@@ -2,5 +2,5 @@
   (:gen-class))
 
 (defn -main
-  [& args]
-  "zero")
+  [digit]
+  (if (= (int digit) 0) "zero" "one"))
