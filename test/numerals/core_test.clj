@@ -11,3 +11,13 @@
 
   (testing "return one when passed 1"
     (is (= "two" (-main (Integer/valueOf 2))))))
+
+
+(deftest the-application-translates-double-digits
+  (testing "return ten when passed 10"
+    (is (= "ten" (-main (Integer/valueOf 10)))))
+
+  (testing "return eleven when passed 11"
+    (is (= "eleven" (-main (Integer/valueOf 11)))))
+
+  )

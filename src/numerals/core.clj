@@ -14,7 +14,20 @@
    9 "nine"}
   )
 
+(def number-names
+  (merge digit-names
+  {10 "ten"
+   11 "eleven"
+   12 "twelve"
+   13 "thirteen"
+   14 "fourteen"
+   15 "fifteen"
+   16 "sixteen"
+   17 "seventeen"
+   18 "eighteen"
+   19 "nineteen"}))
+
 
 (defn -main
   [digit]
-  (get digit-names digit))
+  (get number-names digit))
