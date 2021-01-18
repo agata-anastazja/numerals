@@ -25,9 +25,17 @@
    16 "sixteen"
    17 "seventeen"
    18 "eighteen"
-   19 "nineteen"}))
+   19 "nineteen"
+   20 "twenty"
+  }))
 
 
 (defn -main
-  [digit]
-  (get number-names digit))
+  [digits]
+
+  (loop [remaining-digits digits
+         result ""]
+    (if (<= remaining-digits 20)
+     (str result (get number-names remaining-digits))
+     (recur (- remaining-digits 20)
+            (str (get number-names (- remaining-digits (- remaining-digits 20)) ) " ")))))

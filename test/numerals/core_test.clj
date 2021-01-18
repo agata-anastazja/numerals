@@ -20,4 +20,9 @@
   (testing "return eleven when passed 11"
     (is (= "eleven" (-main (Integer/valueOf 11)))))
 
+  (testing "return twenty one when passed 21"
+    (is (= "twenty one" (-main (Integer/valueOf 21)))))
+
+  (testing "return twenty one when passed 22"
+    (is (= "twenty two" (-main (Integer/valueOf 22)))))
   )
