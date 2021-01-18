@@ -4,8 +4,10 @@
 
 (deftest the-application-translates-single-digits
   (testing "return zero when passed 0"
-
     (is (= "zero" (-main (Integer/valueOf 0)))))
-  (testing "return one when passed 1"
 
-    (is (= "one" (-main (Integer/valueOf 1))))))
+  (testing "return one when passed 1"
+    (is (= "one" (-main (Integer/valueOf 1)))))
+
+  (testing "return one when passed 1"
+    (is (= "two" (-main (Integer/valueOf 2))))))
