@@ -67,7 +67,16 @@
             (if (not (zero? remainder))
                 (recur remainder
                          (str three-digit-number-in-words " and "))
-              (three-digit-number-in-words)))))))
+                three-digit-number-in-words))
+        4 (let [quotient-of-thousand (get-quotient remaining-digits 1000)
+                multiplication-of-hundred (* 1000 quotient-of-thousand)
+                remainder (- remaining-digits multiplication-of-hundred)
+                four-digit-number-in-words (str (get digit-names quotient-of-thousand) " thousand")]
+            (if (not (zero? remainder))
+              (recur remainder
+                     (str four-digit-number-in-words " and "))
+              four-digit-number-in-words))
+        ))))
 
 (defn -main
   [digits]
