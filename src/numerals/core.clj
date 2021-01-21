@@ -37,23 +37,39 @@
    80 "eighty"
    90 "ninety"})
 
+(defn get-quotient [dividend divisor]
+  (int (/ dividend divisor))
+  )
+
 (defn read-single-digit [digits]
   (get digit-names digits))
 
 (defn read-two-digit-number [digits]
   (let [teen (get teen-names digits)
-        multiplication-of-ten (get multiplication-of-ten-names digits)
-        ]
+        multiplication-of-ten (get multiplication-of-ten-names digits)]
     (if (or teen multiplication-of-ten)
       (or teen multiplication-of-ten)
-      (let [ multiplication-of-ten-part-in-digits  (* 10 (int (/ digits 10)))
+      (let [ multiplication-of-ten-part-in-digits  (get-quotient digits 10)
             multiplication-of-ten-part (get multiplication-of-ten-names multiplication-of-ten-part-in-digits)
             remainder (read-single-digit (- digits multiplication-of-ten-part-in-digits))]
        (str multiplication-of-ten-part " " remainder)))))
 
+(defn parse-digits-to-words [digits]
+  (loop [remaining-digits digits
+         accumulator ""]
+    (let [length (count (str remaining-digits))]
+      (case length
+        1 (str accumulator (read-single-digit remaining-digits))
+        2 (str accumulator (read-two-digit-number remaining-digits))
+        3 (let [quotient-of-hundred (get-quotient remaining-digits 100)
+                multiplication-of-hundred (* 100 quotient-of-hundred)
+                remainder (- remaining-digits multiplication-of-hundred)
+                three-digit-number-in-words (str (get digit-names quotient-of-hundred) " hundred")]
+            (if (not (zero? remainder))
+              (recur remainder
+                     (str three-digit-number-in-words " and "))
+              (three-digit-number-in-words)))))) )
+
 (defn -main
   [digits]
-  (let [length (count (str digits))]
-    (case length
-      1 (read-single-digit digits)
-      2 (read-two-digit-number digits))))
+  (parse-digits-to-words digits))

@@ -2,18 +2,18 @@
   (:require [clojure.test :refer :all]
             [numerals.core :refer :all]))
 
-(deftest the-application-translates-single-digits
+(deftest the-application-parses-single-digits
   (testing "return zero when passed 0"
     (is (= "zero" (-main (Integer/valueOf 0)))))
 
   (testing "return one when passed 1"
     (is (= "one" (-main (Integer/valueOf 1)))))
 
-  (testing "return one when passed 1"
+  (testing "return one when passed 2"
     (is (= "two" (-main (Integer/valueOf 2))))))
 
 
-(deftest the-application-translates-double-digits
+(deftest the-application-parses-double-digits
   (testing "return ten when passed 10"
     (is (= "ten" (-main (Integer/valueOf 10)))))
 
@@ -28,4 +28,14 @@
 
   (testing "return thirty when passed 30"
     (is (= "thirty" (-main (Integer/valueOf 30)))))
+  )
+
+
+
+(deftest the-application-parses-three-digits
+  (testing "return hundred and five when passed 105"
+    (is (= "one hundred and five" (-main (Integer/valueOf 105)))))
+
+  ;(testing "return hundred and twenty five when passed 125"
+  ;  (is (= "one hundred and twenty five" (-main (Integer/valueOf 125)))))
   )
