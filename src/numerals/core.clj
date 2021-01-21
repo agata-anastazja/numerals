@@ -37,6 +37,11 @@
    80 "eighty"
    90 "ninety"})
 
+(def scales
+  {100 "hundred"
+   1000 "thousand"
+   1000000 "million"})
+
 (defn get-quotient [dividend divisor]
   (int (/ dividend divisor)))
 
@@ -53,6 +58,13 @@
             remainder (read-single-digit (- digits multiplication-of-ten-part-in-digits))]
         (str multiplication-of-ten-part " " remainder)))))
 
+(defn remove-and-before-hundred [number-accumulator]
+  (let [accumulator-length (count number-accumulator)
+        last-5-chars (and (> accumulator-length 5) (subs number-accumulator (- accumulator-length 5)))]
+    (if (= last-5-chars " and ")
+      (subs number-accumulator 0 (- accumulator-length 4))
+      number-accumulator)))
+
 (defn parse-digits-to-words [digits]
   (loop [remaining-digits digits
          accumulator ""]
@@ -63,11 +75,12 @@
         3 (let [quotient-of-hundred (get-quotient remaining-digits 100)
                 multiplication-of-hundred (* 100 quotient-of-hundred)
                 remainder (- remaining-digits multiplication-of-hundred)
-                three-digit-number-in-words (str (get digit-names quotient-of-hundred) " hundred")]
+                three-digit-number-in-words (str (get digit-names quotient-of-hundred) " hundred")
+                accumulator-wo-and (remove-and-before-hundred accumulator)]
             (if (not (zero? remainder))
                 (recur remainder
-                         (str three-digit-number-in-words " and "))
-                three-digit-number-in-words))
+                         (str accumulator-wo-and (str three-digit-number-in-words " and ")))
+                (str accumulator-wo-and three-digit-number-in-words)))
         4 (let [quotient-of-thousand (get-quotient remaining-digits 1000)
                 multiplication-of-hundred (* 1000 quotient-of-thousand)
                 remainder (- remaining-digits multiplication-of-hundred)
@@ -78,6 +91,9 @@
               four-digit-number-in-words))
         ))))
 
+
+
+
 (defn -main
-  [digits]
-  (parse-digits-to-words digits))
+  [& digits]
+  (parse-digits-to-words (first digits)))

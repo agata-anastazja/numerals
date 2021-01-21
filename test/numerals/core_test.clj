@@ -42,5 +42,14 @@
 
 (deftest the-application-parses-four-digits
   (testing "return one thousand and five when passed 1005"
-    (is (= "one thousand and five" (-main (Integer/valueOf 1005))))))
+    (is (= "one thousand and five" (-main (Integer/valueOf 1005)))))
+
+  (testing "return one thousand one hundred and five when passed 1025"
+    (is (= "one thousand and twenty five" (-main (Integer/valueOf 1025)))))
+
+  (testing "return one thousand one hundred and five when passed 1125"
+    (is (= "one thousand one hundred and twenty five" (-main (Integer/valueOf 1125)))))
+
+  )
+
 
