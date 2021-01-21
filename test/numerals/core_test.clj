@@ -25,4 +25,7 @@
 
   (testing "return twenty one when passed 22"
     (is (= "twenty two" (-main (Integer/valueOf 22)))))
+
+  (testing "return thirty when passed 30"
+    (is (= "thirty" (-main (Integer/valueOf 30)))))
   )
