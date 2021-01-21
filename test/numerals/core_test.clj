@@ -36,6 +36,6 @@
   (testing "return hundred and five when passed 105"
     (is (= "one hundred and five" (-main (Integer/valueOf 105)))))
 
-  ;(testing "return hundred and twenty five when passed 125"
-  ;  (is (= "one hundred and twenty five" (-main (Integer/valueOf 125)))))
+  (testing "return hundred and twenty five when passed 125"
+    (is (= "one hundred and twenty five" (-main (Integer/valueOf 125)))))
   )
