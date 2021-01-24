@@ -37,11 +37,6 @@
    80 "eighty"
    90 "ninety"})
 
-(def scales
-  {100 "hundred"
-   1000 "thousand"
-   1000000 "million"})
-
 (defn get-quotient [dividend divisor]
   (int (/ dividend divisor)))
 
@@ -58,7 +53,6 @@
             remainder (read-single-digit (- digits multiplication-of-ten-part-in-digits))]
         (str multiplication-of-ten-part " " remainder)))))
 
-
 (defn parse-hundreds [digits]
   (loop [remaining-digits digits
          accumulator ""]
@@ -73,23 +67,7 @@
             (if (not (zero? remainder))
                 (recur remainder
                          (str accumulator (str three-digit-number-in-words " and ")))
-                (str accumulator three-digit-number-in-words)))
-        ;4 (let [quotient-of-thousand (get-quotient remaining-digits 1000)
-        ;        multiplication-of-hundred (* 1000 quotient-of-thousand)
-        ;        remainder (- remaining-digits multiplication-of-hundred)
-        ;        four-digit-number-in-words (str (get digit-names quotient-of-thousand) " thousand")]
-        ;    (if (not (zero? remainder))
-        ;      (recur remainder
-        ;             (str four-digit-number-in-words " and "))
-        ;      four-digit-number-in-words))
-        ;5 (let [quotient-of-thousand (get-quotient remaining-digits 1000)
-        ;        multiplication-of-hundred (* 1000 quotient-of-thousand)
-        ;        remainder (- remaining-digits multiplication-of-hundred)]
-        ;    (if (not (zero? remainder))
-        ;      (recur remainder
-        ;             (str " and "))
-        ;      (recur )))
-        ))))
+                (str accumulator three-digit-number-in-words)))))))
 
 (defn parse-thousands [digits]
   (let [quotient-of-thousand (get-quotient digits 1000)]
@@ -98,15 +76,25 @@
       (str (parse-hundreds quotient-of-thousand) " thousand "))))
 
 (defn add-and [digits]
-  (if (and (and (> digits 1000) (> (mod digits 100) 0)) (= 0 (get-quotient (- digits (* 1000 (get-quotient digits 1000))) 100) ))
+  (if (and
+        (and (> digits 1000) (> (mod digits 100) 0))
+        (= 0 (get-quotient (- digits (* 1000 (get-quotient digits 1000))) 100)))
     "and "
     ""))
 
+(defn parse-millions [digits]
+  (let [quotient-of-million (get-quotient digits 1000000)]
+    (if (= 0 quotient-of-million)
+      ""
+      (str (parse-hundreds quotient-of-million) " million "))))
+
 (defn parse-digits-to-words [digits]
-  (let [thousands (parse-thousands digits)
-        and (add-and digits)
-        hundreds  (parse-hundreds (mod digits 1000 ))]
-      (str thousands and hundreds)))
+  (let [millions (parse-millions digits)
+        non-millions-to-parse (mod digits 1000000)
+        thousands (parse-thousands non-millions-to-parse)
+        and (add-and non-millions-to-parse)
+        hundreds  (parse-hundreds (mod non-millions-to-parse 1000 ))]
+      (str millions  thousands and hundreds)))
 
 
 
