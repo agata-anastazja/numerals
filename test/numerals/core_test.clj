@@ -53,9 +53,17 @@
   )
 
 (deftest the-application-parses-five-digits
-  (testing "return one thousand and five when passed 10005"
+  (testing "return ten thousand and five when passed 10005"
     (is (= "ten thousand and five" (-main (Integer/valueOf 10005)))))
 
-  (testing "return one thousand and five when passed 10005"
+  (testing "return ten thousand one hundred and twenty five when passed 10005"
     (is (= "ten thousand one hundred and twenty five" (-main (Integer/valueOf 10125)))))
+  )
+
+(deftest the-application-parses-six-digits
+  (testing "return one hundred thousand and five when passed 100005"
+    (is (= "one hundred thousand and five" (-main (Integer/valueOf 100005)))))
+
+  (testing "return one hundred thousand and five when passed 100125"
+    (is (= "one hundred thousand one hundred and twenty five" (-main (Integer/valueOf 100125)))))
   )

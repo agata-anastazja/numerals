@@ -106,8 +106,7 @@
   (let [thousands (parse-thousands digits)
         and (add-and digits)
         hundreds  (parse-hundreds (mod digits 1000 ))]
-      (str thousands and hundreds)
-   ))
+      (str thousands and hundreds)))
 
 
 
