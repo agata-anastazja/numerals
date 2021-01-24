@@ -52,4 +52,10 @@
 
   )
 
+(deftest the-application-parses-five-digits
+  (testing "return one thousand and five when passed 10005"
+    (is (= "ten thousand and five" (-main (Integer/valueOf 10005)))))
 
+  (testing "return one thousand and five when passed 10005"
+    (is (= "ten thousand one hundred and twenty five" (-main (Integer/valueOf 10125)))))
+  )
