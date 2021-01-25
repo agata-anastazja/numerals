@@ -97,7 +97,3 @@
         thousands (parse-thousands (mod digits 1000000))
         hundreds  (parse-hundreds (mod (mod digits 1000000) 1000))]
       (str millions thousands hundreds)))
-
-(defn -main
-  [& digits]
-  (parse-digits-to-words (first digits)))
