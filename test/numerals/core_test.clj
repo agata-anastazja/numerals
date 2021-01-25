@@ -74,4 +74,10 @@
 
   (testing "return fifty six million and forty five thousand seven hundred and eighty one when passed 56045781"
     (is (= "fifty six million and forty five thousand seven hundred and eighty one" (parse-digits-to-words (Integer/valueOf 56045781)))))
+
+  (testing "return fifty six million and forty five thousand seven hundred when passed 56045700"
+    (is (= "fifty six million and forty five thousand seven hundred" (parse-digits-to-words (Integer/valueOf 56045700)))))
+
+  (testing "return fifty six million and forty five thousand seven hundred when passed 56045000"
+    (is (= "fifty six million and forty five thousand " (parse-digits-to-words (Integer/valueOf 56045000)))))
   )

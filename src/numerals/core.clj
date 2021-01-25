@@ -2,8 +2,7 @@
   (:gen-class))
 
 (def digit-names
-  {0 "zero"
-   1 "one"
+  {1 "one"
    2 "two"
    3 "three"
    4 "four"
@@ -40,14 +39,14 @@
   (int (/ dividend divisor)))
 
 (defn read-single-digit [digits]
-  (get digit-names digits))
+  (or (get digit-names digits) ""))
 
 (defn read-two-digit-number [digits]
   (let [teen (get teen-names digits)
         multiplication-of-ten (get multiplication-of-ten-names digits)]
     (if (or teen multiplication-of-ten)
       (or teen multiplication-of-ten)
-      (let [ multiplication-of-ten-part-in-digits  (* 10 (get-quotient digits 10))
+      (let [multiplication-of-ten-part-in-digits  (* 10 (get-quotient digits 10))
             multiplication-of-ten-part (get multiplication-of-ten-names multiplication-of-ten-part-in-digits)
             remainder (read-single-digit (- digits multiplication-of-ten-part-in-digits))]
         (str multiplication-of-ten-part " " remainder)))))
@@ -93,7 +92,10 @@
       (str (parse-hundreds quotient-of-million) " million " parse-and))))
 
 (defn parse-digits-to-words [digits]
-  (let [millions (parse-millions digits)
-        thousands (parse-thousands (mod digits 1000000))
-        hundreds  (parse-hundreds (mod (mod digits 1000000) 1000))]
-      (str millions thousands hundreds)))
+  (if (= digits 0)
+    "zero"
+    (let [ millions (parse-millions digits)
+          thousands (parse-thousands (mod digits 1000000))
+          hundreds  (parse-hundreds (mod (mod digits 1000000) 1000))]
+      (str millions thousands hundreds))))
+
