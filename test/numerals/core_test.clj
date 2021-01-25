@@ -70,4 +70,9 @@
 
 (deftest the-application-parses-millions
   (testing "return fifty six million nine hundred and forty five thousand seven hundred and eighty one when passed 56945781"
-    (is (= "fifty six million nine hundred and forty five thousand seven hundred and eighty one" (-main (Integer/valueOf 56945781))))))
+    (is (= "fifty six million nine hundred and forty five thousand seven hundred and eighty one" (-main (Integer/valueOf 56945781)))))
+
+  (testing "return fifty six million and forty five thousand seven hundred and eighty one when passed 56045781"
+    (is (= "fifty six million and forty five thousand seven hundred and eighty one" (-main (Integer/valueOf 56045781)))))
+  
+  )

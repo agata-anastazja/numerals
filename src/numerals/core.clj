@@ -11,8 +11,7 @@
    6 "six"
    7 "seven"
    8 "eight"
-   9 "nine"}
-  )
+   9 "nine"})
 
 (def teen-names
   {10 "ten"
@@ -69,34 +68,35 @@
                          (str accumulator (str three-digit-number-in-words " and ")))
                 (str accumulator three-digit-number-in-words)))))))
 
+(defn add-and [digits]
+  (let [longer-then-3-digits (> digits 1000)
+        has-digits-that-require-and (> (mod digits 100) 0)
+        does-not-have-hundreds (= 0 (get-quotient (- digits (* 1000 (get-quotient digits 1000))) 100))]
+    (if (and longer-then-3-digits has-digits-that-require-and does-not-have-hundreds)
+      "and "
+      "")))
+
 (defn parse-thousands [digits]
-  (let [quotient-of-thousand (get-quotient digits 1000)]
+  (let [quotient-of-thousand (get-quotient digits 1000)
+        parse-and (add-and digits)]
     (if (= 0 quotient-of-thousand)
       ""
-      (str (parse-hundreds quotient-of-thousand) " thousand "))))
+      (str (parse-hundreds quotient-of-thousand) " thousand " parse-and))))
 
-(defn add-and [digits]
-  (if (and
-        (and (> digits 1000) (> (mod digits 100) 0))
-        (= 0 (get-quotient (- digits (* 1000 (get-quotient digits 1000))) 100)))
-    "and "
-    ""))
 
 (defn parse-millions [digits]
-  (let [quotient-of-million (get-quotient digits 1000000)]
+  (let [quotient-of-million (get-quotient digits 1000000)
+        add-and-digit (int (/ digits 1000 ))
+        parse-and (add-and add-and-digit)]
     (if (= 0 quotient-of-million)
       ""
-      (str (parse-hundreds quotient-of-million) " million "))))
+      (str (parse-hundreds quotient-of-million) " million " parse-and))))
 
 (defn parse-digits-to-words [digits]
   (let [millions (parse-millions digits)
-        non-millions-to-parse (mod digits 1000000)
-        thousands (parse-thousands non-millions-to-parse)
-        and (add-and non-millions-to-parse)
-        hundreds  (parse-hundreds (mod non-millions-to-parse 1000 ))]
-      (str millions  thousands and hundreds)))
-
-
+        thousands (parse-thousands (mod digits 1000000))
+        hundreds  (parse-hundreds (mod (mod digits 1000000) 1000))]
+      (str millions thousands hundreds)))
 
 (defn -main
   [& digits]
